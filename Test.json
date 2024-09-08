@@ -1,0 +1,60 @@
+{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "query_string": {
+                        "query": "Spiking Study",
+                        "fields": [
+                            "attachment_bucket_keys",
+                            "attachment_texts",
+                            "author_id",
+                            "author_name",
+                            "bucket_key",
+                            "description",
+                            "document_id^5",
+                            "document_name",
+                            "document_state",
+                            "document_uid",
+                            "is_extracted",
+                            "linked_document_id",
+                            "linked_source",
+                            "ly_numbers",
+                            "raw_texts",
+                            "security_key"
+                        ],
+                        "default_operator": "AND",
+                        "analyze_wildcard": true
+                    }
+                },
+                {
+                    "nested": {
+                        "path": "attachment_texts",
+                        "query": {
+                            "query_string": {
+                                "query": "SSpiking Study",
+                                "default_operator": "AND",
+                                "analyze_wildcard": true
+                            }
+                        }
+                    }
+                }
+            ],
+            "must": [
+                {
+                    "nested": {
+                        "path": "semaphore_metadata",
+                        "query": {
+                            "query_string": {
+                                "query": "guid-sdjhbfer-jsdhbd-4978e49jh",
+                                "default_operator": "AND",
+                                "analyze_wildcard": true
+                            }
+                        }
+                    }
+                }
+            ],
+            "minimum_should_match": 1
+        }
+    }
+}
